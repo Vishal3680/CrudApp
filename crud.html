@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <style>
+      .container1{
+        display: block;
+        display: flex;
+        justify-content: center;
+        margin-top: 46px;
+      }
+      .container1 h1{
+        text-decoration-line: underline;
+        text-decoration-color: rgb(83, 74, 63);
+      }
+    </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-expand-lg bg-primary nevbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+              <a class="nav-link text-light" href="#">Courses</a>
+              <a class="nav-link text-light" href="#">Fee structure</a>
+              <a class="nav-link disabled text-light">About</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container1">
+      <h1>Btech 2nd year student list</h1>
+    </div>
+    <main>
+        <div class="container col-4">
+            <div class="input-group mb-3 mt-5">
+                <input type="text" class="form-control" placeholder="Student's name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-success" id="add_btn" type="button" id="button-addon2">Add</button>
+              </div>
+              <ul id="parent-list" class="list-group">
+                <li class="list-group-item d-flex justify-content-between ">
+                    <h3 class="flex-grow-1" >Student 1</h3>
+                    <button class="btn btn-warning mx-3"onclick="edit(this)">Edit</button>
+                    <button class="btn btn-danger"onclick="remove(this)">Remove</button>
+                </li>
+              </ul>
+              
+        </div>
+    </main>
+    <script>
+        let addbtn=document.getElementById("add_btn")
+        addbtn.addEventListener('click',addstudents)
+        let parentList=document.getElementById("parent-list")
+        function addstudents(e){
+            if(parentList.children[0].className=="new"){
+              parentList.children[0].remove();
+            }
+            let currentbtn=e.currentTarget
+            let currentinput=currentbtn.previousElementSibling
+            let StudentName=currentinput.value
+            let newli=document.createElement('li')
+            newli.className="list-group-item d-flex justify-content-between ";
+            
+            newli.innerHTML=`<h3 class="flex-grow-1" >${StudentName}</h3>
+                    <button class="btn btn-warning mx-3"onclick="edit(this)">Edit</button>
+                    <button class="btn btn-danger"onclick="remove(this)"">Remove</button>`
+            
+            parentList.appendChild(newli)
+
+        }
+        function remove(currElement){
+          currElement.parentElement.remove();
+          let parentList=document.getElementById("parent-list")
+          if(parentList.children.length <= 0){
+            let newMsg=document.createElement('h3');
+            newMsg.classList.add("new")
+            newMsg.textContent="Nothing is here.Please add student's name";
+            parentList.append(newMsg);
+            
+          }
+        }
+        function edit(currElement){
+          if(currElement.textContent=="Done"){
+            currElement.textContent="Edit"
+            let currStudentName=currElement.previousElementSibling.value
+            currHeading=document.createElement('h3')
+            currHeading.textContent=currStudentName
+            currElement.parentElement.replaceChild(currHeading,currElement.previousElementSibling)
+
+          }
+          else{
+
+            
+            currElement.textContent="Done"
+            let currStudentName=currElement.previousElementSibling.textContent
+            let currInput=document.createElement("input")
+            currInput.type="text"
+            currInput.placeholder="Student's name"
+            currInput.className="form-control"
+            currInput.value=currStudentName;
+            currElement.parentElement.replaceChild(currInput,currElement.previousElementSibling)
+          }
+
+
+
+        }
+    </script>
+</body>
